@@ -1,4 +1,5 @@
-.p{
+p{
+    text-align: center;
     padding: 20px;
     background-color: lightpink;
     border: 1px solid red;
