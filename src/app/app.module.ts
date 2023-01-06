@@ -11,7 +11,7 @@ import { SuccessMessageComponent } from './success-message/success-message.compo
   declarations: [
     AppComponent,
     WarningMessageComponent,
-    SuccessMessageComponent
+    SuccessMessageComponent,
   ],
   imports: [
     BrowserModule,
