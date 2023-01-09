@@ -11,6 +11,8 @@ on:
     branches:
     - master
 
+stages:
+
 jobs:
   build:
 
@@ -35,7 +37,7 @@ jobs:
     - name: Build Prod  
       run: npm run ng build --prod
       
-    - name: Upload GitHub Pages artifact
+    - name: Upload artifact
       uses: actions/upload-pages-artifact@v1.0.7
       with:
     # Artifact name
@@ -44,3 +46,22 @@ jobs:
         path: ./dist/angular-app/
     # Duration after which artifact will expire in days.
         retention-days: 90
+        
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup Pages
+        uses: actions/configure-pages@v2
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          # Upload entire repository
+          path: './dist/angular-app/'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1
