@@ -11,8 +11,6 @@ on:
     branches:
     - master
 
-stages:
-
 jobs:
   build:
 
