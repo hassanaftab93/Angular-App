@@ -5,9 +5,11 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ "master" ]
+    branches:
+    - master
   pull_request:
-    branches: [ "master" ]
+    branches:
+    - master
 
 jobs:
   build:
@@ -39,6 +41,6 @@ jobs:
     # Artifact name
         name: drop
     # Path of the directory containing the static assets.
-        path: _site/
+        path: ./dist/angular-app/
     # Duration after which artifact will expire in days.
         retention-days: 90
