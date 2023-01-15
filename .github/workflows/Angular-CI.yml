@@ -34,7 +34,7 @@ jobs:
       run: npm ci
       
     - name: Build Prod  
-      run: npm run ng build --prod --base-href /${{ github.event.repository.name }}/
+      run: npm run ng build --prod --base-href ${{ github.event.repository.name }}
       
     - name: Upload artifact
       uses: actions/upload-pages-artifact@v1.0.7
