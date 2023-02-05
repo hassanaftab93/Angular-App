@@ -1,8 +1,8 @@
 # Use the official Node.js image as the base image
-FROM node:16
+FROM node:16.17 AS builder
 
 # Set the working directory in the container to /app
-WORKDIR /angular-app
+WORKDIR /app
 
 # Copy the package.json and package-lock.json to the container
 COPY package*.json .
@@ -14,8 +14,13 @@ RUN npm install
 COPY . .
 
 # Build the Angular project
-RUN npm run build
+RUN npm run build-prod
 
+FROM alpine
+WORKDIR /angular-app
+COPY --from=builder /app/dist/angular-app/ /angular-app/
+#COPY package*.json ./
+#RUN npm install
 # Expose port 4200 to allow access to the Angular app
 EXPOSE 4200
 
