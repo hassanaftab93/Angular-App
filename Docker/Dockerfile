@@ -19,7 +19,7 @@ RUN npm run build-prod
 FROM alpine
 WORKDIR /angular-app
 COPY --from=builder /app/dist/angular-app/ /angular-app/
-#COPY package*.json ./
+COPY package*.json ./
 #RUN npm install
 # Expose port 4200 to allow access to the Angular app
 EXPOSE 4200
