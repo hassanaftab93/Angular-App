@@ -56,7 +56,7 @@ jobs:
           X="$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')"
           echo "$X"
         env:
-          IMAGE_REPOSITORY: ${{ X }}
+          IMAGE_REPOSITORY: ${{ env.X }}
       
       - name: Checkout repository
         uses: actions/checkout@v3
