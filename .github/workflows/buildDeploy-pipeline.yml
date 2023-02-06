@@ -14,7 +14,6 @@ env:
   GHCR_TOKEN: ${{ secrets.GHCR_TOKEN }}
   DOCKER_HUB_REPO: ${{ secrets.DOCKER_HUB_USERNAME }}/${{ github.event.repository.name }}
   GHCR_REPO: ${{ secrets.GHCR_HUB_USERNAME }}/${{ github.event.repository.name }}
-  LOWER_CASE_VAR: ${{ env.DOCKER_HUB_REPO }}
 
 jobs:
   get-tag-version:
@@ -38,6 +37,8 @@ jobs:
           echo "Original: ${{ env.DOCKER_HUB_REPO }}"
           LOWER_CASE_VAR="$(echo "${{ env.DOCKER_HUB_REPO }}" | tr '[:upper:]' '[:lower:]')"
           echo "Converted to lower case: ${{ env.DOCKER_HUB_REPO }}"
+          env:
+            LOWER_CASE_VAR: ${{ env.DOCKER_HUB_REPO }}
 
       - name: Checkout Code
         uses: actions/checkout@v2
