@@ -1,6 +1,6 @@
 FROM node:16.17 AS build-stage
 WORKDIR /app/
-COPY package*.json ./package*.json
+COPY package*.json /app/
 RUN npm install --only=production
 COPY . .
 RUN npm run build-prod
