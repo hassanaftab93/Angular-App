@@ -49,7 +49,6 @@ jobs:
           password: ${{ env.DOCKER_HUB_PASSWORD }}
 
       - name: Build Docker Image
-        type: docker-image
         uses: docker/build-push-action@v3
         with:
           repository: ${{ env.LOWER_CASE_VAR }}
@@ -59,7 +58,6 @@ jobs:
 
       - name: Push to Docker Hub
         if: success()
-        type: docker-image
         uses: docker/build-push-action@v3
         with:
           repository: ${{ env.LOWER_CASE_VAR }}
