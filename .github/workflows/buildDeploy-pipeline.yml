@@ -53,7 +53,8 @@ jobs:
       - id: read-docker-image-identifiers
         name: Read Docker Image Identifiers
         run: |
-          IMAGE_REPOSITORY="$(echo "$github.repository" | tr '[:upper:]' '[:lower:]')"
+          IMAGE_REPOSITORY="$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')"
+          echo "$IMAGE_REPOSITORY"
       
       - name: Checkout repository
         uses: actions/checkout@v3
