@@ -49,17 +49,21 @@ jobs:
           password: ${{ env.DOCKER_HUB_PASSWORD }}
 
       - name: Build Docker Image
+        type: docker-image
         uses: docker/build-push-action@v3
         with:
-          tags: ${{ env.LOWER_CASE_VAR }}:latest
+          repository: ${{ env.LOWER_CASE_VAR }}
+          tags: 'latest'
           context: ./Docker/
           push: true
 
       - name: Push to Docker Hub
         if: success()
+        type: docker-image
         uses: docker/build-push-action@v3
         with:
-          tags: ${{ env.LOWER_CASE_VAR }}:latest
+          repository: ${{ env.LOWER_CASE_VAR }}
+          tags: 'latest'
           username: ${{ env.DOCKER_HUB_USERNAME }}
           password: ${{ env.DOCKER_HUB_PASSWORD }}
 
