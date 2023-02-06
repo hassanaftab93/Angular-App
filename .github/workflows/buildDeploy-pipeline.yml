@@ -52,7 +52,7 @@ jobs:
 
       - name: Build Docker Image
         run: |
-          docker build -t ${{ env.LOWER_CASE_VAR }} -f ${{ env.DOCKERFILE_PATH }} .
+          docker build ${{ env.LOWER_CASE_VAR }} -f ${{ env.DOCKERFILE_PATH }} .
 
       - name: Docker Push
         run: |
