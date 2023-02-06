@@ -51,7 +51,7 @@ jobs:
       if: success()
       uses: docker/build-push-action@v3
       with:
-        tags: ${{ env.DOCKER_HUB_REPO }}:${{ env.RELEASE_VERSION }}
+        tags: ${{ env.RELEASE_VERSION }}
         username: ${{ env.DOCKER_HUB_USERNAME }}
         password: ${{ env.DOCKER_HUB_PASSWORD }}
 
