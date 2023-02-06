@@ -14,6 +14,8 @@ env:
   GHCR_TOKEN: ${{ secrets.GHCR_TOKEN }}
   DOCKER_HUB_REPO: ${{ secrets.DOCKER_HUB_USERNAME }}/${{ github.event.repository.name }}
   GHCR_REPO: ${{ secrets.GHCR_HUB_USERNAME }}/${{ github.event.repository.name }}
+  IMAGE_NAME: ${{ github.event.repository.name }}
+  DOCKERFILE_PATH: Docker/Dockerfile
 
 jobs:
   get-tag-version:
@@ -49,21 +51,29 @@ jobs:
           password: ${{ env.DOCKER_HUB_PASSWORD }}
 
       - name: Build Docker Image
-        uses: docker/build-push-action@v3
-        with:
-          repository: ${{ env.LOWER_CASE_VAR }}
-          tags: 'latest'
-          context: ./Docker/
-          push: true
+        run: |
+          docker build -t ${{ env.LOWER_CASE_VAR }} -f ${{ env.DOCKERFILE_PATH }} .
 
-      - name: Push to Docker Hub
-        if: success()
-        uses: docker/build-push-action@v3
-        with:
-          repository: ${{ env.LOWER_CASE_VAR }}
-          tags: 'latest'
-          username: ${{ env.DOCKER_HUB_USERNAME }}
-          password: ${{ env.DOCKER_HUB_PASSWORD }}
+      - name: Docker Push
+        run: |
+          docker push ${{ env.DOCKER_HUB_USERNAME }}/${{ github.event.repository.name }}
+
+      # - name: Build Docker Image
+      #   uses: docker/build-push-action@v3
+      #   with:
+      #     repository: ${{ env.LOWER_CASE_VAR }}
+      #     tags: 'latest'
+      #     context: ./Docker/
+      #     push: true
+
+      # - name: Push to Docker Hub
+      #   if: success()
+      #   uses: docker/build-push-action@v3
+      #   with:
+      #     repository: ${{ env.LOWER_CASE_VAR }}
+      #     tags: 'latest'
+      #     username: ${{ env.DOCKER_HUB_USERNAME }}
+      #     password: ${{ env.DOCKER_HUB_PASSWORD }}
 
     # - name: Login to GHCR
     #   if: success()
