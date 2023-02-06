@@ -24,7 +24,7 @@ jobs:
         run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
       - name: Print Tags Version
         run: |
-          echo $RELEASE_VERSION
+          echo ${{ steps.meta.outputs.tags }}
           echo ${{ env.RELEASE_VERSION }}
 
   build-and-push:
