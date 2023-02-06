@@ -20,16 +20,18 @@ jobs:
     steps:
     - name: Checkout Code
       uses: actions/checkout@v2
+      
+    
 
     - name: Build Docker Image
-      uses: docker/build-push-action@v1
+      uses: docker/build-push-action@v4.0.0
       with:
         context: ./Docker/
         push: true
 
     - name: Push to Docker Hub
       if: success()
-      uses: docker/push-action@v1
+      uses: docker/push-action@v4.0.0
       with:
         tags: ${{ env.DOCKER_HUB_REPO }}:${{ env.TAG }}
         username: ${{ env.DOCKER_HUB_USERNAME }}
@@ -37,7 +39,7 @@ jobs:
 
     - name: Push to GHCR
       if: success()
-      uses: docker/push-action@v1
+      uses: docker/push-action@v4.0.0
       with:
         tags: ghcr.io/${{ env.GHCR_REPO }}:${{ env.TAG }}
         registry: ghcr.io
