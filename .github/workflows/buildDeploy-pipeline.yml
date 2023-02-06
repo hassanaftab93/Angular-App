@@ -17,13 +17,16 @@ env:
 
 jobs:
   get-tag-version:
+
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: Set env
         run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
       - name: Print Tags Version
+        id: tagname
         run: echo ${{ env.RELEASE_VERSION }}
+        run: echo ::set-output name=version::${{ env.RELEASE_VERSION }}
 
   build-and-push:
     needs: get-tag-version
@@ -40,34 +43,10 @@ jobs:
           username: ${{ env.DOCKER_HUB_USERNAME }}
           password: ${{ env.DOCKER_HUB_PASSWORD }}
 
-      - name: Prepare
-        id: prep
-        run: |
-            IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/$IMAGE_NAME
-
-            # Change all uppercase to lowercase
-            IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
-
-            # Strip git ref prefix from version
-            # VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
-            # I changed this so it takes the version from a file on my project
-            VERSION=$(cat version)
-
-            # Strip "v" prefix from tag name
-            [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
-
-            # Use Docker `latest` tag convention
-            [ "$VERSION" == "master" ] && VERSION=latest
-
-            echo IMAGE_ID=$IMAGE_ID
-            echo VERSION=$VERSION
-            echo ::set-output name=version::${VERSION}
-            echo ::set-output name=docker_tag::${IMAGE_ID}:${VERSION}
-
       - name: Build Docker Image
         uses: docker/build-push-action@v3
         with:
-          tags: ${{ steps.prep.outputs.docker_tag }}
+          tags: ${{ DOCKER_HUB_REPO }}:${{ steps.tagname.outputs.version }}
           context: ./Docker/
           push: true
 
@@ -75,7 +54,7 @@ jobs:
         if: success()
         uses: docker/build-push-action@v3
         with:
-          tags: ${{ steps.prep.outputs.docker_tag }}
+          tags: ${{ DOCKER_HUB_REPO }}:${{ steps.tagname.outputs.version }}
           username: ${{ env.DOCKER_HUB_USERNAME }}
           password: ${{ env.DOCKER_HUB_PASSWORD }}
 
