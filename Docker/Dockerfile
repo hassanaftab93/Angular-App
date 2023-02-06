@@ -2,7 +2,7 @@ FROM node:16.17 AS build-stage
 WORKDIR /app/
 COPY package*.json ./
 RUN npm install --only=production
-COPY ./ ./
+COPY . .
 RUN npm run build-prod
 
 # Stage - Production
