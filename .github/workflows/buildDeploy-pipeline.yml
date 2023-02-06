@@ -23,9 +23,7 @@ jobs:
       - name: Set env
         run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
       - name: Print Tags Version
-        run: |
-          echo ${{ steps.meta.outputs.version }}
-          echo ${{ env.RELEASE_VERSION }}
+        run: echo ${{ env.RELEASE_VERSION }}
 
   build-and-push:
     needs: get-tag-version
@@ -46,13 +44,14 @@ jobs:
       uses: docker/build-push-action@v3
       with:
         context: ./Docker/
+        tags: ${{ env.RELEASE_VERSION }}
         push: true
 
     - name: Push to Docker Hub
       if: success()
       uses: docker/build-push-action@v3
       with:
-        tags: ${{ steps.meta.outputs.version }}
+        tags: ${{ env.RELEASE_VERSION }}
         username: ${{ env.DOCKER_HUB_USERNAME }}
         password: ${{ env.DOCKER_HUB_PASSWORD }}
 
