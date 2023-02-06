@@ -1,4 +1,4 @@
-IMAGE_NAME=my-angular-app
+IMAGE_NAME=hassanaftab/my-angular-app
 DOCKERFILE_PATH=Docker/Dockerfile
 
 build:
