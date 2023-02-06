@@ -1,0 +1,45 @@
+name: Build and Push Docker Image
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+
+env:
+  DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
+  DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
+  GHCR_TOKEN: ${{ secrets.GHCR_TOKEN }}
+  DOCKER_HUB_REPO: ${{ secrets.DOCKER_HUB_USERNAME }}/${{ github.event.repository.name }}
+  GHCR_REPO: ${{ secrets.GHCR_HUB_USERNAME }}/${{ github.event.repository.name }}
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2
+
+    - name: Build Docker Image
+      uses: docker/build-push-action@v1
+      with:
+        context: ./Docker/
+        push: true
+
+    - name: Push to Docker Hub
+      if: success()
+      uses: docker/push-action@v1
+      with:
+        tags: ${{ env.DOCKER_HUB_REPO }}:${{ env.TAG }}
+        username: ${{ env.DOCKER_HUB_USERNAME }}
+        password: ${{ env.DOCKER_HUB_PASSWORD }}
+
+    - name: Push to GHCR
+      if: success()
+      uses: docker/push-action@v1
+      with:
+        tags: ghcr.io/${{ env.GHCR_REPO }}:${{ env.TAG }}
+        registry: ghcr.io
+        username: ${{ env.GHCR_TOKEN }}
+        password: x-oauth-basic
