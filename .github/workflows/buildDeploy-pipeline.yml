@@ -14,7 +14,6 @@ env:
   GHCR_TOKEN: ${{ secrets.GHCR_TOKEN }}
   DOCKER_HUB_REPO: ${{ secrets.DOCKER_HUB_USERNAME }}/${{ github.event.repository.name }}
   GHCR_REPO: ${{ secrets.GHCR_HUB_USERNAME }}/${{ github.event.repository.name }}
-  RELEASE_VERSION: ${{ steps.vars.outputs.tag }}
 
 jobs:
   get-tag-version:
