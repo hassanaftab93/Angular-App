@@ -34,11 +34,9 @@ jobs:
     steps:
       - name: Convert to Lower Case
         run: |
-          echo "Original: ${{ env.DOCKER_HUB_REPO }}"
-          LOWER_CASE_VAR="$(echo "${{ env.DOCKER_HUB_REPO }}" | tr '[:upper:]' '[:lower:]')"
-          echo "Converted to lower case: ${{ env.DOCKER_HUB_REPO }}"
-          env:
-            LOWER_CASE_VAR: ${{ env.DOCKER_HUB_REPO }}
+          echo "Original: $DOCKER_HUB_REPO"
+          LOWER_CASE_VAR="$(echo "$DOCKER_HUB_REPO" | tr '[:upper:]' '[:lower:]')"
+          echo "Converted to lower case: $DOCKER_HUB_REPO"
 
       - name: Checkout Code
         uses: actions/checkout@v2
