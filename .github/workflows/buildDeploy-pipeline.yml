@@ -33,12 +33,11 @@ jobs:
     needs: get-tag-version
     runs-on: ubuntu-latest
     steps:
-
       - name: Convert to Lower Case
-      run: |
-        echo "Original: ${{ env.DOCKER_HUB_REPO }}"
-        LOWER_CASE_VAR="$(echo "${{ env.DOCKER_HUB_REPO }}" | tr '[:upper:]' '[:lower:]')"
-        echo "Converted to lower case: ${{ env.DOCKER_HUB_REPO }}"
+        run: |
+          echo "Original: ${{ env.DOCKER_HUB_REPO }}"
+          LOWER_CASE_VAR="$(echo "${{ env.DOCKER_HUB_REPO }}" | tr '[:upper:]' '[:lower:]')"
+          echo "Converted to lower case: ${{ env.DOCKER_HUB_REPO }}"
 
       - name: Checkout Code
         uses: actions/checkout@v2
