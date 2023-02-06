@@ -44,14 +44,14 @@ jobs:
       uses: docker/build-push-action@v3
       with:
         context: ./Docker/
-        tag: ${{ env.RELEASE_VERSION }}
+        tags: ${{ env.RELEASE_VERSION }}
         push: true
 
     - name: Push to Docker Hub
       if: success()
       uses: docker/build-push-action@v3
       with:
-        tag: ${{ env.RELEASE_VERSION }}
+        tags: ${{ env.RELEASE_VERSION }}
         username: ${{ env.DOCKER_HUB_USERNAME }}
         password: ${{ env.DOCKER_HUB_PASSWORD }}
 
