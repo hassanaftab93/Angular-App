@@ -21,6 +21,9 @@ kubelogin:
 kubedelete:
 	kubectl delete -f $(KUBERNETES_DASHBOARD_SETUP) --namespace $(NAMESPACE)
 
+kubedeletens:
+	kubectl delete namespace $(NAMESPACE)
+
 logs:
 	kubectl logs -f $(shell kubectl get pods -n $(NAMESPACE) -l app=kubernetes-dashboard -o jsonpath='{.items[0].metadata.name}') --namespace $(NAMESPACE)
 	
