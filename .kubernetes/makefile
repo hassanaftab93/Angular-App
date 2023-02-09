@@ -9,14 +9,15 @@ dashboard:
 	kubectl create namespace $(NAMESPACE)
 	kubectl apply -f $(KUBERNETES_DASHBOARD_SETUP) --namespace $(NAMESPACE)
 
-	kubectl $(KUBERNETES_PROXY)
-
 kubesecrets:
 	kubectl -n $(NAMESPACE) get secrets
 	kubectl -n $(NAMESPACE) describe secret $(SECRET_NAME)
 
+kubeproxy:
+	kubectl $(KUBERNETES_PROXY)
+
 kubelogin:
-	http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/.
+	echo http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/.
 
 kubedelete:
 	kubectl delete -f $(KUBERNETES_DASHBOARD_SETUP) --namespace $(NAMESPACE)
