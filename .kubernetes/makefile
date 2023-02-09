@@ -3,7 +3,7 @@
 NAMESPACE=kubernetes-dashboard
 KUBERNETES_DASHBOARD_SETUP=https://raw.githubusercontent.com/kubernetes/dashboard/v2.6.1/aio/deploy/recommended.yaml
 KUBERNETES_PROXY=proxy
-SECRET_NAME=vpnkit-controller-token-cpqmv
+SECRET_NAME=kubernetes-dashboard-certs
 
 dashboard:
 	kubectl create namespace $(NAMESPACE)
