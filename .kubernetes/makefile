@@ -28,4 +28,4 @@ kubedeletens:
 logs:
 	kubectl logs -f $(shell kubectl get pods -n $(NAMESPACE) -l app=kubernetes-dashboard -o jsonpath='{.items[0].metadata.name}') --namespace $(NAMESPACE)
 	
-.PHONY: dashboard kubesecrets kubelogin kubedelete logs
+.PHONY: dashboard kubesecrets kubeproxy kubelogin kubedelete kubedeletens logs
